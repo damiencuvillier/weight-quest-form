@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   launchGame() {
     document.documentElement.requestFullscreen();
-    //this.router.navigate([ "/profile" ]).then();
+    this.router.navigate([ "/profile" ]).then();
   }
 
   ngOnInit() {

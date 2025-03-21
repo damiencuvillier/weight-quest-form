@@ -1,20 +1,31 @@
 <div class="profile">
-  <app-avatar>
-  </app-avatar>
+  <app-avatar class="avatar"/>
+  <div class="bmi" *ngIf="bmi !== undefined">
+    Indice IMC
+    <strong>{{ bmi }}</strong>
+  </div>
   <mat-stepper class="form" [linear]="true" #stepper>
     <mat-step [stepControl]="generalGroup">
       <form [formGroup]="generalGroup">
         <ng-template matStepLabel>Je suis…</ng-template>
-        <div class="field">
-          <img src="/age.png" />
+        <div class="field small age">
+          <img src="/age.png"/>
           <mat-form-field appearance="outline">
             <mat-label>Mon âge</mat-label>
             <mat-select formControlName="age" (valueChange)="onChange()">
               <mat-option *ngFor="let age of ages" [value]="age">{{ age }}</mat-option>
             </mat-select>
+            <span matTextSuffix>ans</span>
           </mat-form-field>
         </div>
         <div class="field">
+          <img src="/genre.png"/>
+          <mat-radio-group formControlName="gender">
+            <mat-radio-button value="F">Femme</mat-radio-button>
+            <mat-radio-button value="M">Homme</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="field weight small">
           <img src="/weight.png"/>
           <mat-form-field appearance="outline">
             <mat-label>Mon poids</mat-label>
@@ -27,15 +38,22 @@
             <span matTextSuffix>kg</span>
           </mat-form-field>
         </div>
-        <div class="field">
-          <img src="/genre.png" />
-          <mat-radio-group formControlName="gender">
-            <mat-radio-button value="F">Femme</mat-radio-button>
-            <mat-radio-button value="M">Homme</mat-radio-button>
-          </mat-radio-group>
+        <div class="field height small">
+          <img src="/height.png"/>
+          <mat-form-field appearance="outline">
+            <mat-label>Mon taille</mat-label>
+            <input matInput
+                   (change)="onChange()"
+                   type="number"
+                   max="2.2" min="1.2"
+                   [step]="0.01"
+                   formControlName="height"/>
+            <span matTextSuffix>m</span>
+          </mat-form-field>
         </div>
-        <div class="field">
-          <img src="/age.png"/>
+
+        <div class="field full-width">
+          <img src="/pathology.png"/>
           <mat-form-field appearance="outline">
             <mat-label> Mes pathologies</mat-label>
             <mat-select [multiple]="true" formControlName="pathologies" (selectionChange)="onChange()">
@@ -43,67 +61,174 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div class="field">
+          <img src="/family.png"/>
+          <mat-form-field appearance="outline">
+            <mat-label>Situation familiale</mat-label>
+            <mat-icon matPrefix>guardian</mat-icon>
+            <mat-select [multiple]="true"
+                        (valueChange)="onChange()"
+                        formControlName="family"
+                        (selectionChange)="onChange()">
+              <mat-option *ngFor="let mStatus of maritalStatuses"
+                          [value]="mStatus"
+              >{{ mStatus }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field class="field" appearance="outline">
-          <mat-label>Situation familiale</mat-label>
-          <mat-icon matPrefix>guardian</mat-icon>
-          <mat-select [multiple]="true"
-                      formControlName="family" (selectionChange)="onChange()">
-            <mat-option *ngFor="let mStatus of maritalStatuses"
-                        [value]="mStatus"
-            >{{ mStatus }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="field">
-          <mat-label>Activité professionnelle</mat-label>
-          <mat-select formControlName="job" (selectionChange)="onChange()">
-            <mat-option value="etudiant">Étudiant</mat-option>
-            <mat-optgroup label="Sans activité">
-              <mat-option value="ai">AI</mat-option>
-              <mat-option value="chômage">Chômage</mat-option>
-              <mat-option value="retraite">Retraite</mat-option>
-            </mat-optgroup>
-            <mat-optgroup label="Avec activité">
-              <mat-option value="travail sédentaire">Travail sédentaire</mat-option>
-              <mat-option value="activité modérée">Activité modérée</mat-option>
-              <mat-option value="activité intensive">Activité intensive</mat-option>
-            </mat-optgroup>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
+        <div class="field">
+          <img src="/job.png"/>
+          <mat-form-field>
+            <mat-label>Activité professionnelle</mat-label>
+            <mat-select formControlName="job" (selectionChange)="onChange()">
+              <mat-option value="etudiant">Étudiant</mat-option>
+              <mat-optgroup label="Sans activité">
+                <mat-option value="ai">AI</mat-option>
+                <mat-option value="chômage">Chômage</mat-option>
+                <mat-option value="retraite">Retraite</mat-option>
+              </mat-optgroup>
+              <mat-optgroup label="Avec activité">
+                <mat-option value="travail sédentaire">Travail sédentaire</mat-option>
+                <mat-option value="activité modérée">Activité modérée</mat-option>
+                <mat-option value="activité intensive">Activité intensive</mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="actions">
+          <button mat-raised-button matStepperNext>Étape suivante</button>
         </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="feelingGroup" label="Je me sens…">
       <form [formGroup]="feelingGroup">
-        <div class="field">
-          <mat-label>Le moral</mat-label>
+        <div class="field mental slider">
+          <h2>Mon moral</h2>
           <mat-slider showTickMarks
-            min="1" max="10">
-            <input matSliderThumb />
+                      min="1" max="10">
+            <input matSliderThumb formControlName="mental">
           </mat-slider>
+          <span class="start">Je n'ai pas le moral</span>
+          <span class="end">J'ai la patate</span>
 
-          <input matInput="matInput"
-                 type="number" min="1" max="10"
-                 formControlName="m¥ental"
-                 (change)="onChange()" />
         </div>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+
+        <div class="field physical slider">
+          <h2>Activité physique</h2>
+
+          <mat-slider (change)="updatePhysicalLabel()"
+                      min="1" max="6">
+            <input matSliderThumb formControlName="physical">
+          </mat-slider>
+          <p *ngIf="physicalLabel !== undefined">{{ physicalLabel }}</p>
+        </div>
+        <div class="actions">
+          <button mat-raised-button matStepperPrevious>Étape précédente</button>
+          <button mat-raised-button matStepperNext>Étape suivante</button>
         </div>
       </form>
     </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
+    <mat-step [stepControl]="motiveGroup" label="Ma motivation">
+      <form [formGroup]="motiveGroup">
+        <div class="field full-width motivation">
+          <img src="/motivation.png"/>
+          <mat-label>
+            Pour quelles raisons voulez-vous perdre du poids ?
+          </mat-label>
+          <mat-button-toggle-group
+            multiple
+            (selectionchange)="onChange()" class="list"
+            formControlName="motivation">
+            <mat-button-toggle [className]="motiveId"
+                               *ngFor="let motiveId of Object.keys(motivations)"
+                               [value]="motiveId"
+                               (click)="propagateToRadio($event)"
+            >
+              {{ motivations[motiveId] }}
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+          <div class="actions">
+            <button mat-raised-button matStepperPrevious>Étape Précédente</button>
+            <button mat-raised-button matStepperNext>Étape Suivante</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Evaluation" [stepControl]="evaluationGroup">
+      <form [formGroup]="evaluationGroup">
+        <div class="field full-width">
+          <img src="/alimentation.png"/>
+          <mat-form-field appearance="outline">
+            <mat-label>Mon alimentation est plutot du genre</mat-label>
+            <mat-select required formControlName="meals">
+              <mat-option value="grignotage">Je ne fais pas de vrai repas mais plutôt des grignotages</mat-option>
+              <mat-option value="2 repas">Je fais 1 à 2 repas par jour (avec ou sans encas)</mat-option>
+              <mat-option value="2 repas">Je fais 3 repas par jour (avec ou sans encas)</mat-option>
+              <mat-option>Autre</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="field slider restaurant full-width">
+          <mat-slider min="1" max="5">
+            <input matSliderThumb formControlName="restaurant"/>
+          </mat-slider>
+
+          <span class="start">
+            <img src="/cooking.png"/>
+            Repas cuisiné à la maison
+          </span>
+          <span class="end">
+            <img src="/restaurant.png"/>
+             Commande en ligne et/ou au restaurant
+          </span>
+        </div>
+
+        <div class="field desire full-width">
+          <img src="/desire.png"/>
+          <mat-slide-toggle formControlName="desire">
+            Certaines situations me donnent envie de manger
+          </mat-slide-toggle>
+        </div>
+        <div class="field overeat">
+          <img src="/overeat.png"/>
+          <mat-form-field appearance="outline">
+            <mat-label>
+              Vous mangez plus que ce que vous avez prévu :
+            </mat-label>
+            <mat-select required formControlName="overeat">
+              <mat-option value="jamais">Jamais</mat-option>
+              <mat-option value="parfois">Parfois</mat-option>
+              <mat-option value="regulier">Régulièrement</mat-option>
+              <mat-option value="souvent">La plupart du temps</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="actions">
+          <button mat-raised-button matStepperPrevious>Étape Précédente</button>
+          <button mat-raised-button matStepperNext>Étape Suivante</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Projet de changement" [stepControl]="changeGroup">
+      <form [formGroup]="changeGroup">
+        <div class="field full-width">
+          <img src="/actions.png"/>
+          <mat-form-field>
+            <mat-label>
+              Pour perdre du poids, je pense que la ou les voies sont :
+            </mat-label>
+            <mat-select multiple formControlName="betterways">
+              <mat-option *ngFor="let actionId of Object.keys(actions)" [value]="actionId">{{ actions[actionId] }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="actions">
+          <button mat-raised-button matStepperPrevious>Étape Précédente</button>
+          <button mat-raised-button matStepperNext>Valider</button>
+        </div>
+      </form>
     </mat-step>
   </mat-stepper>
 </div>

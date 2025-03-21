@@ -10,21 +10,27 @@ header {
 
   &:before {
     content: '';
-    position: fixed;
+    position: absolute;
+    display:block;
     top: 0;
     left: 0;
     width: 100vw;
+    z-index: 10;
     height: 100vh;
     background-color: #000;
     opacity: 0.8;
     visibility: hidden;
-    transition: opacity 500ms 150ms;
+    transition: opacity 1500ms 150ms;
   }
 
-  .launched {
+  &.launched {
     &:before {
       opacity: 0.8;
       visibility: visible;
+    }
+
+    button{
+      opacity: 0;
     }
 
   }
@@ -43,11 +49,13 @@ header {
 
   button {
     display: block;
-    position: absolute;
+    position: fixed;
     bottom: 2rem;
     left: 50%;
     width: 20vw;
     margin-left: -10vw;
+    z-index: 10;
+    transition: opacity 500ms;
 
     .countdown {
       font-size: 1Rem;

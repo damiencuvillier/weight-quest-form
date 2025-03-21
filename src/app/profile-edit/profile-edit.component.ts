@@ -1,14 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious } from '@angular/material/stepper';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatOptgroup, MatOption, MatSelect } from '@angular/material/select';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatIcon } from '@angular/material/icon';
-import { MatSlider, MatSliderThumb } from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-profile-edit',
@@ -19,7 +22,6 @@ import { MatSlider, MatSliderThumb } from '@angular/material/slider';
     MatLabel,
     MatFormField,
     MatStepLabel,
-    ReactiveFormsModule,
     MatInput,
     MatLabel,
     MatStepperPrevious,
@@ -33,31 +35,94 @@ import { MatSlider, MatSliderThumb } from '@angular/material/slider';
     MatRadioGroup,
     MatOptgroup,
     MatIcon,
-    MatSlider,
-    MatSliderThumb
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    FormsModule,
+    NgIf,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    MatSlideToggle
   ],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
 })
-export class ProfileEditComponent implements OnInit{
+export class ProfileEditComponent implements OnInit {
 
   private _formBuilder = inject(FormBuilder);
 
   generalGroup = this._formBuilder.group({
     age: [ '', Validators.required ],
     weight: [ '', [ Validators.required, Validators.min(50), Validators.max(200) ] ],
+    height: [ '', [ Validators.required, Validators.min(1.20), Validators.max(2.20) ] ],
     gender: [ '', Validators.required ],
     pathologies: [ '' ],
-    family: [ '', Validators.required ],
+    family: [ '' ],
     job: [ '', Validators.required ]
   });
   feelingGroup = this._formBuilder.group({
     mental: [ '', Validators.required ],
     physical: [ '', Validators.required ]
   });
+  motiveGroup = this._formBuilder.group({
+    motivation: [ '', Validators.required ],
+  });
+  evaluationGroup = this._formBuilder.group({
+    meals: [ '', Validators.required ],
+    restaurant: [ '', Validators.required ],
+    desire: [ '', Validators.required ],
+    overeat: [ '', Validators.required ]
+  });
+  changeGroup = this._formBuilder.group({
+    betterways: [ '', Validators.required ],
+  });
+
   public ages: string[] = [ '<18', '18-24', '25-34', '35-44', '45-54', '55-64', '65+' ];
   public pathologies: string[] = [ 'Diabète', 'Hypertension', 'Cholestérol', 'HTA', 'SAOS' ];
   public maritalStatuses: string[] = [ 'En couple', "Parents", "Grand-Parents" ];
+
+
+  public mental?: number = 5;
+
+  public physicalLabel ?: string;
+
+  protected bmi?: number;
+
+  public updatePhysicalLabel() {
+    const labels = [
+      '',
+      'Je ne fais aucune activité physique',
+      'De temps à autre',
+      'Je fais une activité physique modérée une fois par semaine',
+      'Je fais une activité physique intensive une fois par semaine',
+      'Je fais une activité physique quotidienne de manera modérée',
+      'J\'ai une activité sportive intensive plusieurs fois par semaine'
+    ];
+    // @ts-ignore
+    this.physicalLabel = labels[this.feelingGroup.controls.physical.value ?? 0];
+
+    this.onChange();
+  }
+
+  public motivations : {[key: string]: string} = {
+    'health':'Pour améliorer ma santé',
+    'mobility':'Pour améliorer ma mobilité',
+    'feeling':'Pour me sentir mieux de ma peau',
+    'image':'Pour améliorer mon image de moi',
+    'confident':'Pour améliorer ma confiance en moi',
+    'tired':'Pour être moins fatigué',
+    'moral':'Pour avoir un meilleur moral',
+    'pain':'Pour avoir moins de douleurs',
+    'sexual':'Pour améliorer ma libido'
+  };
+
+  public actions : {[key:string]: string} = {
+    food: 'Changer mon alimentation',
+    move: 'Bouger plus',
+    medicine: 'Prendre le médicament GLP-1\nWegovy, Mounjaro, Ozempic, …)',
+    surgery: 'Chirurgie',
+    other: 'Autre'
+  }
 
   public onChange(): void {
     this.generalGroup.valueChanges.subscribe(val => {
@@ -66,18 +131,47 @@ export class ProfileEditComponent implements OnInit{
     this.feelingGroup.valueChanges.subscribe(val => {
       localStorage.setItem('feeling', JSON.stringify(val));
     });
+    this.motiveGroup.valueChanges.subscribe(val => {
+      localStorage.setItem('motive', JSON.stringify(val));
+    });
+
+
+    if (this.generalGroup.controls.height.value && this.generalGroup.controls.weight.value) {
+      this.bmi = Math.floor(
+        parseInt(this.generalGroup.controls.weight.value) /
+        Math.pow(parseFloat(this.generalGroup.controls.height.value), 2));
+    } else {
+      this.bmi = undefined;
+    }
+
+
   }
 
   ngOnInit(): void {
     const general = localStorage.getItem('general');
     if (general != null) {
-      this.generalGroup.setValue(JSON.parse(general));
+      this.generalGroup.setValue({
+        ...{
+          height: 1.80,
+          weight: 70
+        },
+        ...JSON.parse(general)
+      });
     }
     const feeling = localStorage.getItem('feeling');
     if (feeling != null) {
       this.feelingGroup.setValue(JSON.parse(feeling));
     }
+
+    this.updatePhysicalLabel()
   }
 
 
+  protected readonly Object = Object;
+
+  propagateToRadio($event: MouseEvent) {
+    if ($event.target === null) return;
+    // @ts-ignore
+    ($event.target as HTMLElement).querySelector('button')?.click();
+  }
 }
