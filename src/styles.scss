@@ -1,0 +1,123 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&family=RocknRoll+One&family=Fresca&family=Funnel+Display:wght@300..800&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+
+:root {
+  --orange: #FE730D;
+  --background: #96C29B;
+  --white: #FAFAFA;
+  --radius: 5px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  font-family: "RocknRoll One", sans-serif;
+}
+
+
+.main-font {
+  font-family: "Funnel Display";
+}
+
+.fantasy {
+  font-family: "Fontdiner Swanky", fantasy;
+}
+
+
+button {
+  font-size: 18pt;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--white);
+  padding: 0.5rem 2rem;
+  opacity: 0.9;
+
+  box-shadow: 10px 10px 100px var(--white);
+  background-color: var(--orange);
+  border-radius: var(--radius);
+  border: 4px solid transparent;
+
+  &:hover {
+    opacity: 1;
+    border-color: #FAFAFA99;
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+fieldset {
+  border-radius: var(--radius);
+  border-width: 4px;
+}
+
+legend, label {
+  font-family: "RocknRoll One", sans-serif;
+  font-size: 12pt;
+}
+
+legend {
+  padding: 0 2rem;
+  font-size: 14pt;
+}
+
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: var(--orange) !important;
+  color: var(--orange) !important;
+}
+
+.mat-form-field-outline-thick .mat-form-field-outline-start {
+  border-top-color: var(--orange) !important;
+  border-bottom-color: var(--orange) !important;
+}
+
+.mat-input-element {
+  caret-color: var(--orange) !important;
+  color: var(--orange) !important;
+}
+
+.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: var(--orange) !important;
+}
+
+.mat-checkbox-frame {
+  border-color: var(--orange) !important;
+}
+
+.mat-radio-checked .mat-radio-outer-circle {
+  border-color: var(--orange) !important;
+}
+
+.mat-radio-inner-circle {
+  background-color: var(--orange) !important;
+}
+
+.mat-slider-thumb {
+  background-color: var(--orange) !important;
+}
+
+.mat-slider-track-fill {
+  background-color: var(--orange) !important;
+}
+
+.mat-slider-track-background {
+  background-color: var(--orange) !important;
+}
+
+mat-icon {
+  font-family: "Material Symbols Outlined" !important;
+}

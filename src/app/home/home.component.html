@@ -1,0 +1,6 @@
+<header class="header" [class]="{'launched':launched}">
+  <img class="logo" src="/icon.png" alt="WeightQuest-Form">
+  <h1 class="fantasy">Weight Quest</h1>
+  <button (click)="launchGame()">Lancer le jeu <span class="countdown" *ngIf="counter > 0">{{counter}}</span></button>
+
+</header>

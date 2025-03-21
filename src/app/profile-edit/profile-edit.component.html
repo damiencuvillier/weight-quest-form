@@ -1,0 +1,109 @@
+<div class="profile">
+  <app-avatar>
+  </app-avatar>
+  <mat-stepper class="form" [linear]="true" #stepper>
+    <mat-step [stepControl]="generalGroup">
+      <form [formGroup]="generalGroup">
+        <ng-template matStepLabel>Je suis…</ng-template>
+        <div class="field">
+          <img src="/age.png" />
+          <mat-form-field appearance="outline">
+            <mat-label>Mon âge</mat-label>
+            <mat-select formControlName="age" (valueChange)="onChange()">
+              <mat-option *ngFor="let age of ages" [value]="age">{{ age }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="field">
+          <img src="/weight.png"/>
+          <mat-form-field appearance="outline">
+            <mat-label>Mon poids</mat-label>
+            <mat-icon matPrefix>weight</mat-icon>
+            <input matInput
+                   (change)="onChange()"
+                   type="number"
+                   max="200" min="50"
+                   formControlName="weight"/>
+            <span matTextSuffix>kg</span>
+          </mat-form-field>
+        </div>
+        <div class="field">
+          <img src="/genre.png" />
+          <mat-radio-group formControlName="gender">
+            <mat-radio-button value="F">Femme</mat-radio-button>
+            <mat-radio-button value="M">Homme</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="field">
+          <img src="/age.png"/>
+          <mat-form-field appearance="outline">
+            <mat-label> Mes pathologies</mat-label>
+            <mat-select [multiple]="true" formControlName="pathologies" (selectionChange)="onChange()">
+              <mat-option *ngFor="let pathology of pathologies" [value]="pathology">{{ pathology }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field class="field" appearance="outline">
+          <mat-label>Situation familiale</mat-label>
+          <mat-icon matPrefix>guardian</mat-icon>
+          <mat-select [multiple]="true"
+                      formControlName="family" (selectionChange)="onChange()">
+            <mat-option *ngFor="let mStatus of maritalStatuses"
+                        [value]="mStatus"
+            >{{ mStatus }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field">
+          <mat-label>Activité professionnelle</mat-label>
+          <mat-select formControlName="job" (selectionChange)="onChange()">
+            <mat-option value="etudiant">Étudiant</mat-option>
+            <mat-optgroup label="Sans activité">
+              <mat-option value="ai">AI</mat-option>
+              <mat-option value="chômage">Chômage</mat-option>
+              <mat-option value="retraite">Retraite</mat-option>
+            </mat-optgroup>
+            <mat-optgroup label="Avec activité">
+              <mat-option value="travail sédentaire">Travail sédentaire</mat-option>
+              <mat-option value="activité modérée">Activité modérée</mat-option>
+              <mat-option value="activité intensive">Activité intensive</mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="feelingGroup" label="Je me sens…">
+      <form [formGroup]="feelingGroup">
+        <div class="field">
+          <mat-label>Le moral</mat-label>
+          <mat-slider showTickMarks
+            min="1" max="10">
+            <input matSliderThumb />
+          </mat-slider>
+
+          <input matInput="matInput"
+                 type="number" min="1" max="10"
+                 formControlName="m¥ental"
+                 (change)="onChange()" />
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

@@ -1,0 +1,33 @@
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  svg {
+    transition: transform 0.3s ease;
+
+    transform: scale(1.05);
+    animation: float 7s ease-in-out infinite;
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      25%{
+        transform: translateX(3px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+      75%{
+        transform: translateX(-5px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+  }
+
+}

@@ -1,0 +1,37 @@
+<div class="disclaimer">
+  <h1 class="fantasy">Informations importantes</h1>
+  <p >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis ante at sapien suscipit luctus a sit amet leo. Duis rhoncus, neque eu lobortis
+    egestas, tortor elit vestibulum massa, in viverra nunc quam et arcu. Pellentesque viverra ex in augue egestas tempus. Morbi vitae turpis lorem.
+    Pellentesque ullamcorper tellus quis tempus dictum. Proin a mollis justo, vitae mattis quam. Vivamus elementum tellus ex, ac tempus est bibendum
+    id.
+    Mauris nec velit vitae dolor tincidunt feugiat ac eu dui. Maecenas elementum ullamcorper ligula in elementum. Nunc vel elit a turpis ullamcorper
+    feugiat. Nulla vitae tempus lacus, sollicitudin cursus nisl.
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis ante at sapien suscipit luctus a sit amet leo. Duis rhoncus, neque eu lobortis
+    egestas, tortor elit vestibulum massa, in viverra nunc quam et arcu. Pellentesque viverra ex in augue egestas tempus. Morbi vitae turpis lorem.
+    Pellentesque ullamcorper tellus quis tempus dictum. Proin a mollis justo, vitae mattis quam. Vivamus elementum tellus ex, ac tempus est bibendum
+    id.
+    Mauris nec velit vitae dolor tincidunt feugiat ac eu dui. Maecenas elementum ullamcorper ligula in elementum. Nunc vel elit a turpis ullamcorper
+    feugiat. Nulla vitae tempus lacus, sollicitudin cursus nisl.
+
+
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis ante at sapien suscipit luctus a sit amet leo. Duis rhoncus, neque eu lobortis
+    egestas, tortor elit vestibulum massa, in viverra nunc quam et arcu. Pellentesque viverra ex in augue egestas tempus. Morbi vitae turpis lorem.
+    Pellentesque ullamcorper tellus quis tempus dictum. Proin a mollis justo, vitae mattis quam. Vivamus elementum tellus ex, ac tempus est bibendum
+    id.
+    Mauris nec velit vitae dolor tincidunt feugiat ac eu dui. Maecenas elementum ullamcorper ligula in elementum. Nunc vel elit a turpis ullamcorper
+    feugiat. Nulla vitae tempus lacus, sollicitudin cursus nisl.
+
+
+  </p>
+  <label for="ch">
+    <input id="ch" type="checkbox" [(ngModel)]="checked">
+    <mat-icon *ngIf="checked">check_box</mat-icon>
+    <mat-icon *ngIf="!checked">check_box_outline_blank</mat-icon>
+    Je comprends les objectifs présentés
+  </label>
+
+  <button [disabled]="!checked" routerLink="/profile/edit">Continuer</button>
+</div>

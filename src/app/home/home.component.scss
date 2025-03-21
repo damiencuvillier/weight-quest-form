@@ -1,0 +1,65 @@
+header {
+  background-image: url('/launcher.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: 0.8;
+    visibility: hidden;
+    transition: opacity 500ms 150ms;
+  }
+
+  .launched {
+    &:before {
+      opacity: 0.8;
+      visibility: visible;
+    }
+
+  }
+
+  .logo {
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: #FFF;
+    display: none;
+  }
+
+  button {
+    display: block;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    width: 20vw;
+    margin-left: -10vw;
+
+    .countdown {
+      font-size: 1Rem;
+
+      &:before {
+        content: ' (';
+
+      }
+
+      &:after {
+        content: ')';
+      }
+    }
+  }
+}

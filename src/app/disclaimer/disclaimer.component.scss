@@ -1,0 +1,60 @@
+.disclaimer{
+  display:flex;
+  position:fixed;
+  top:0;
+  left:0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/launcher.png');
+  background-size:cover;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  &:before{
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    content: '';
+    background-color: rgba(0,0,0,0.9);
+  }
+  * {
+    z-index:1;
+    color: var(--white);
+  }
+  h1{
+    font-size: 20pt;
+    margin: 3rem auto 2rem;
+  }
+  p {
+    max-width: 80vw;
+    display: flex;
+    width: 500px;
+    font-size: 14pt;
+    white-space: pre-line;
+    max-height: 75vh;
+    overflow-y: auto;
+  }
+
+  label{
+    display:flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    font-size: 16pt;
+    line-height: 40px;
+    cursor:pointer;
+    margin-bottom: 2rem;
+    input[type=checkbox]{
+      display:none;
+      width: 50px;height: 50px;
+    }
+    mat-icon{
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+      margin-right: 2rem;
+    }
+  }
+}
