@@ -41,11 +41,12 @@
         <div class="field height small">
           <img src="/height.png"/>
           <mat-form-field appearance="outline">
-            <mat-label>Mon taille</mat-label>
+            <mat-label>Ma taille</mat-label>
             <input matInput
                    (change)="onChange()"
                    type="number"
                    max="2.2" min="1.2"
+                   placeholder="1,8"
                    [step]="0.01"
                    formControlName="height"/>
             <span matTextSuffix>m</span>
@@ -80,7 +81,7 @@
 
         <div class="field">
           <img src="/job.png"/>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Activité professionnelle</mat-label>
             <mat-select formControlName="job" (selectionChange)="onChange()">
               <mat-option value="etudiant">Étudiant</mat-option>
@@ -138,7 +139,7 @@
         <div class="field full-width motivation">
           <img src="/motivation.png"/>
           <mat-label>
-            Pour quelles raisons voulez-vous perdre du poids ?
+            Je veux perdre du poids pour …
           </mat-label>
           <mat-button-toggle-group
             multiple
@@ -164,7 +165,7 @@
         <div class="field full-width">
           <img src="/alimentation.png"/>
           <mat-form-field appearance="outline">
-            <mat-label>Mon alimentation est plutot du genre</mat-label>
+            <mat-label>Mon alimentation est plutôt du genre</mat-label>
             <mat-select required formControlName="meals">
               <mat-option value="grignotage">Je ne fais pas de vrai repas mais plutôt des grignotages</mat-option>
               <mat-option value="2 repas">Je fais 1 à 2 repas par jour (avec ou sans encas)</mat-option>
@@ -197,7 +198,7 @@
           <img src="/overeat.png"/>
           <mat-form-field appearance="outline">
             <mat-label>
-              Vous mangez plus que ce que vous avez prévu :
+              Je mange plus que ce que j'ai prévu :
             </mat-label>
             <mat-select required formControlName="overeat">
               <mat-option value="jamais">Jamais</mat-option>
@@ -228,7 +229,7 @@
 
 
         </div>
-        <div class="field dd-actions" *ngIf="changeGroup.controls.betterways.value">
+        <div class="field dd-actions full-width" *ngIf="changeGroup.controls.betterways.value">
           <mat-list>
             <mat-list-item
               *ngFor="let actionId of changeGroup.controls.betterways.value; let index = index"

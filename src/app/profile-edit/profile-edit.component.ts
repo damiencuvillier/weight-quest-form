@@ -107,15 +107,15 @@ export class ProfileEditComponent implements OnInit {
   }
 
   public motivations: { [key: string]: string } = {
-    'health': 'Pour améliorer ma santé',
-    'mobility': 'Pour améliorer ma mobilité',
-    'feeling': 'Pour me sentir mieux de ma peau',
-    'image': 'Pour améliorer mon image de moi',
-    'confident': 'Pour améliorer ma confiance en moi',
-    'tired': 'Pour être moins fatigué',
-    'moral': 'Pour avoir un meilleur moral',
-    'pain': 'Pour avoir moins de douleurs',
-    'sexual': 'Pour améliorer ma libido'
+    'health': 'améliorer ma santé',
+    'mobility': 'améliorer ma mobilité',
+    'feeling': 'me sentir mieux de ma peau',
+    'image': 'améliorer mon image de moi',
+    'confident': 'améliorer ma confiance en moi',
+    'tired': 'être moins fatigué',
+    'moral': 'avoir un meilleur moral',
+    'pain': 'avoir moins de douleurs',
+    'sexual': 'améliorer ma libido'
   };
 
   public actions: { [key: string]: string } = {

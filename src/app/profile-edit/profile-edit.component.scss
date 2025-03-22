@@ -348,22 +348,42 @@
 
         &.dd-actions {
           border: 1px solid var(--pink);
-          width: 50vw;
+          border-radius: var(--radius);
+
+          ::ng-deep .mat-mdc-list {
+            width: 100%;
+          }
+
+          ::ng-deep .mat-mdc-list-item-single-line {
+            .dd-item{
+              border-bottom: 1px solid var(--pink);
+            }
+
+            &:last-child {
+              .dd-item {
+                border-bottom: 0;
+              }
+            }
+          }
+
           .dd-item {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            border-bottom: 1px solid var(--pink);
+            padding: 0.5rem 1rem;
+
 
             .list-actions {
               display: flex;
               flex-direction: row;
               margin-right: 2px;
               margin-left: 2rem;
-              mat-icon{
-                cursor:pointer;
+
+              mat-icon {
+                cursor: pointer;
                 border-radius: 100%;
-                &:hover{
+
+                &:hover {
                   color: var(--pink);
                   background-color: #FAFAFA;
                 }
