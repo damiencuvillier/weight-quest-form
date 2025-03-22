@@ -12,6 +12,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatList, MatListItem } from '@angular/material/list';
 
 @Component({
   selector: 'app-profile-edit',
@@ -42,7 +43,9 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     NgIf,
     MatButtonToggleGroup,
     MatButtonToggle,
-    MatSlideToggle
+    MatSlideToggle,
+    MatListItem,
+    MatList
   ],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
@@ -81,7 +84,6 @@ export class ProfileEditComponent implements OnInit {
   public pathologies: string[] = [ 'Diabète', 'Hypertension', 'Cholestérol', 'HTA', 'SAOS' ];
   public maritalStatuses: string[] = [ 'En couple', "Parents", "Grand-Parents" ];
 
-
   public mental?: number = 5;
 
   public physicalLabel ?: string;
@@ -104,19 +106,19 @@ export class ProfileEditComponent implements OnInit {
     this.onChange();
   }
 
-  public motivations : {[key: string]: string} = {
-    'health':'Pour améliorer ma santé',
-    'mobility':'Pour améliorer ma mobilité',
-    'feeling':'Pour me sentir mieux de ma peau',
-    'image':'Pour améliorer mon image de moi',
-    'confident':'Pour améliorer ma confiance en moi',
-    'tired':'Pour être moins fatigué',
-    'moral':'Pour avoir un meilleur moral',
-    'pain':'Pour avoir moins de douleurs',
-    'sexual':'Pour améliorer ma libido'
+  public motivations: { [key: string]: string } = {
+    'health': 'Pour améliorer ma santé',
+    'mobility': 'Pour améliorer ma mobilité',
+    'feeling': 'Pour me sentir mieux de ma peau',
+    'image': 'Pour améliorer mon image de moi',
+    'confident': 'Pour améliorer ma confiance en moi',
+    'tired': 'Pour être moins fatigué',
+    'moral': 'Pour avoir un meilleur moral',
+    'pain': 'Pour avoir moins de douleurs',
+    'sexual': 'Pour améliorer ma libido'
   };
 
-  public actions : {[key:string]: string} = {
+  public actions: { [key: string]: string } = {
     food: 'Changer mon alimentation',
     move: 'Bouger plus',
     medicine: 'Prendre le médicament GLP-1\nWegovy, Mounjaro, Ozempic, …)',
@@ -134,6 +136,12 @@ export class ProfileEditComponent implements OnInit {
     this.motiveGroup.valueChanges.subscribe(val => {
       localStorage.setItem('motive', JSON.stringify(val));
     });
+    this.evaluationGroup.valueChanges.subscribe(val => {
+      localStorage.setItem('evaluation', JSON.stringify(val));
+    })
+    this.changeGroup.valueChanges.subscribe(val => {
+      localStorage.setItem('change', JSON.stringify(val));
+    })
 
 
     if (this.generalGroup.controls.height.value && this.generalGroup.controls.weight.value) {
@@ -163,6 +171,21 @@ export class ProfileEditComponent implements OnInit {
       this.feelingGroup.setValue(JSON.parse(feeling));
     }
 
+    const motive = localStorage.getItem('motive');
+    if (motive != null) {
+      this.motiveGroup.setValue(JSON.parse(motive));
+    }
+
+    const evaluation = localStorage.getItem('evaluation');
+    if (evaluation != null) {
+      this.evaluationGroup.setValue(JSON.parse(evaluation));
+    }
+
+    const change = localStorage.getItem('change');
+    if (change != null) {
+      this.changeGroup.setValue(JSON.parse(change));
+    }
+
     this.updatePhysicalLabel()
   }
 
@@ -173,5 +196,26 @@ export class ProfileEditComponent implements OnInit {
     if ($event.target === null) return;
     // @ts-ignore
     ($event.target as HTMLElement).querySelector('button')?.click();
+  }
+
+  moveActionDown(index: number) {
+
+    if (Array.isArray(this.changeGroup.controls.betterways.value)) {
+      const values: string[] = Array.from(this.changeGroup.controls.betterways.value.values());
+      [values[index], values[index + 1]] = [values[index + 1], values[index]];
+      // @ts-ignore
+      this.changeGroup.controls.betterways.setValue(values);
+
+    }
+  }
+
+  moveActionUp(index: number) {
+    if (Array.isArray(this.changeGroup.controls.betterways.value)) {
+      const values: string[] = Array.from(this.changeGroup.controls.betterways.value.values());
+      [values[index], values[index - 1]] = [values[index - 1], values[index]];
+      // @ts-ignore
+      this.changeGroup.controls.betterways.setValue(values);
+
+    }
   }
 }

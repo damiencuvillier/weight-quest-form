@@ -119,10 +119,13 @@
           <h2>Activité physique</h2>
 
           <mat-slider (change)="updatePhysicalLabel()"
-                      min="1" max="6">
+                      min="1" max="6" showTickMarks>
             <input matSliderThumb formControlName="physical">
           </mat-slider>
-          <p *ngIf="physicalLabel !== undefined">{{ physicalLabel }}</p>
+          <p *ngIf="physicalLabel !== undefined">
+            <mat-icon>comment</mat-icon>
+            {{ physicalLabel }}
+          </p>
         </div>
         <div class="actions">
           <button mat-raised-button matStepperPrevious>Étape précédente</button>
@@ -171,16 +174,15 @@
           </mat-form-field>
         </div>
         <div class="field slider restaurant full-width">
-          <mat-slider min="1" max="5">
+          <img src="/delivery.png"/>
+          <mat-slider min="1" max="5" showTickMarks>
             <input matSliderThumb formControlName="restaurant"/>
           </mat-slider>
 
           <span class="start">
-            <img src="/cooking.png"/>
             Repas cuisiné à la maison
           </span>
           <span class="end">
-            <img src="/restaurant.png"/>
              Commande en ligne et/ou au restaurant
           </span>
         </div>
@@ -223,6 +225,26 @@
               <mat-option *ngFor="let actionId of Object.keys(actions)" [value]="actionId">{{ actions[actionId] }}</mat-option>
             </mat-select>
           </mat-form-field>
+
+
+        </div>
+        <div class="field dd-actions" *ngIf="changeGroup.controls.betterways.value">
+          <mat-list>
+            <mat-list-item
+              *ngFor="let actionId of changeGroup.controls.betterways.value; let index = index"
+              [className]="actionId"
+            >
+              <div class="dd-item">
+                {{ actions[actionId] }}
+                <div class="list-actions">
+                  <mat-icon (click)="moveActionUp(index)" *ngIf="index > 0">arrow_upward</mat-icon>
+                  <mat-icon (click)="moveActionDown(index)" *ngIf="index < (changeGroup.controls.betterways.value?.length ??0) - 1">arrow_downward
+                  </mat-icon>
+
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
         </div>
         <div class="actions">
           <button mat-raised-button matStepperPrevious>Étape Précédente</button>
