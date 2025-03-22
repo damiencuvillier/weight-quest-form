@@ -121,7 +121,7 @@ export class ProfileEditComponent implements OnInit {
   public actions: { [key: string]: string } = {
     food: 'Changer mon alimentation',
     move: 'Bouger plus',
-    medicine: 'Prendre le médicament GLP-1\nWegovy, Mounjaro, Ozempic, …)',
+    medicine: 'Prendre le médicament GLP-1\n(Wegovy, Mounjaro, Ozempic, …)',
     surgery: 'Chirurgie',
     other: 'Autre'
   }
