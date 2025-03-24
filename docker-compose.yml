@@ -1,0 +1,8 @@
+services:
+  nginx:
+    image: nginx
+    container_name: weight-quest-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./dist/weight-quest-form/browser/:/usr/share/nginx/html/
